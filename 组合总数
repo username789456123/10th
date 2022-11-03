@@ -1,0 +1,38 @@
+int candidatesSize_tmp;
+
+int ansSize;
+
+int combineSize;
+
+int* ansColumnSize;
+void dfs(int* candidates, int target, int** ans, int* combine, int idx){
+	if(idx == target){
+		return ;
+	}
+	if(target == 0){
+		int* tmp = malloc(sizeof(int) * combineSize);//初始化一个临时数组 
+		for(int i = 0 ; i < candidatesSize_tmp; i++){
+			tmp[i] = combine[i];
+		}
+		ans[ansSize] = tmp;
+		ansColumnSize[ansSize++] = combineSize;
+        return;
+	}
+	dfs(candidates, target, ans, combine, idx + 1);
+	if(target - candidates[ids] >= 0){
+		combine[combineSize++] = candidates[idx];
+        dfs(candidates, target - candidates[idx], ans, combine, idx);
+        combineSize--;
+	}
+}
+int** combinationSum(int* candidates, int candidatesSize, int target, int* returnSize, int** returnColumnSizes) {
+	candidatesSize_tmp = candiatesSize;//初始化数组长度 
+	ansSize = combineSize = 0;//初始化结果数组长度
+	int** ans = malloc(sizeof(int*) * 1001);//定义存放结果的二元数组
+	ansColumnSize = malloc(sizeof(int) * 1001);//定义存放结果数组的列长度
+	int combine[2001];//初始化存放过程的数组
+	dfs(candidates, target, ans, combine, 0);//dfs(nums , target , [] , [] , 0)
+	*returnSize = ansSize;
+	*returnColumSizes = ansColumSizes;
+	return ans;
+} 
