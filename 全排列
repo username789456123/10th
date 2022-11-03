@@ -1,0 +1,20 @@
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        def dfs(nums , depth , path ,size , used , res):
+            if depth == size:
+                res.append(path[:])
+                return 
+            for i in range(size):
+                if not used[i]:
+                    used[i] = True
+                    path.append(nums[i])
+                    dfs(nums , depth + 1 , path , size , used , res)
+                    used[i] = False
+                    path.pop()
+        size = len(nums)
+        if size == 0 :
+            return []
+        res = []
+        used = [False for _ in range(size)]
+        dfs(nums , 0 , [] , size , used ,res)
+        return res
